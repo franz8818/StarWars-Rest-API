@@ -9,6 +9,8 @@ from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
 from models import db, People
+from models import db, Planets
+from models import db, Vehicles
 #from models import Person
 
 app = Flask(__name__)
