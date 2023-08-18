@@ -8,7 +8,7 @@ class People(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     image = db.Column(db.String(250), unique=True, nullable=False)
-    gender = db.Column(db.String(6), unique=True, nullable=False)
+    gender = db.Column(db.String(6), unique=False, nullable=False)
     birth_year = db.Column(db.String(80), unique=False, nullable=False)
     height = db.Column(db.String(80), unique=False, nullable=False)
     mass = db.Column(db.String(80), unique=False, nullable=False)
@@ -34,8 +34,8 @@ class People(db.Model):
             # do not serialize the password, its a security breach
         }
     
-    #PLANETS
-    class Planets(db.Model):
+#PLANETS
+class Planet(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     image = db.Column(db.String(250), unique=True, nullable=False)
@@ -48,7 +48,7 @@ class People(db.Model):
     diameter = db.Column(db.String(80), unique=False, nullable=False)
     
     def __repr__(self):
-        return '<Planets %r>' % self.name
+        return '<Planet %r>' % self.name
 
     def serialize(self):
         return {
@@ -65,8 +65,8 @@ class People(db.Model):
             # do not serialize the password, its a security breach
         }
     
-    #VEHICLES
-    class Planets(db.Model):
+ #VEHICLES
+class Vehicle(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     image = db.Column(db.String(250), unique=True, nullable=False)
@@ -79,7 +79,7 @@ class People(db.Model):
     cargo_capacity = db.Column(db.String(80), unique=False, nullable=False)
     
     def __repr__(self):
-        return '<Vehicles %r>' % self.name
+        return '<Vehicle %r>' % self.name
 
     def serialize(self):
         return {
