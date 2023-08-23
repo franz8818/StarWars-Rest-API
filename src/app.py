@@ -39,7 +39,7 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-#PEOPLE
+#-------------------------------PEOPLE----------------------------------------
 @app.route('/people', methods=['GET'])
 def get_all_people():
     all_people = People.query.all()
@@ -97,6 +97,126 @@ def modify_one_people(people_uid):
     )
     db.session.commit()
     result = {"msg": "people modify succesfully"}
+    return jsonify(result), 200
+
+#-------------------------------PLANETS----------------------------------------
+@app.route('/planet', methods=['GET'])
+def get_all_people():
+    all_planet = Planet.query.all()
+    if len(all_planet) < 1 :  
+        return jsonify({"msg": "Not found"}), 404
+    results = list(map(lambda item: item.serialize(), all_planet))
+
+    return jsonify(results), 200
+
+@app.route('/planet/<int:planet_uid>', methods=['GET'])
+def get_one_planet(planet_uid):
+    planet = Planet.query.get(planet_uid)
+    if planet is None :
+        return jsonify({"msg": f'planet with uid {planet_uid} not found'}), 404
+    result = planet.serialize()
+
+    return jsonify(result), 200
+
+
+@app.route('/planet', methods=['POST'])
+def create_one_planet():
+    body = json.loads(request.data)
+    new_planet = Planet(
+        name = body["name"],
+        image = body["image"],
+        population = body["population"],
+        terrain = body["terrain"],
+        climate = body["climate"],
+        surface_water = body["surface_water"],
+        rotation_period = body["rotation_period"],
+        orbital_period = body["orbital_period"],
+        diameter = body["diameter"]
+    )
+    db.session.add(new_planet)
+    db.session.commit()
+    result = {"msg": "planet created succesfully"}
+    return jsonify(result), 200
+
+@app.route('/planet/<int:planet_uid>', methods=['PUT'])
+def modify_one_planet(planet_uid):
+    planet = Planet.query.get(planet_uid)
+    if planet is None :
+        return jsonify({"msg": f'planet with uid {planet_uid} not found'}), 404
+    body = json.loads(request.data)
+    planet = Planet(
+        name = body["name"],
+        image = body["image"],
+        gender = body["gender"],
+        birth_year = body["birth_year"],
+        height = body["height"],
+        mass = body["mass"],
+        hair_color = body["hair_color"],
+        skin_color = body["skin_color"],
+        eye_color = body["eye_color"]
+    )
+    db.session.commit()
+    result = {"msg": "planet modify succesfully"}
+    return jsonify(result), 200
+
+#-------------------------------VEHICLES----------------------------------------
+@app.route('/vehicle', methods=['GET'])
+def get_all_vehicle():
+    all_vehicle = Vehicle.query.all()
+    if len(all_vehicle) < 1 :  
+        return jsonify({"msg": "Not found"}), 404
+    results = list(map(lambda item: item.serialize(), all_vehicle))
+
+    return jsonify(results), 200
+
+@app.route('/vehicle/<int:vehicle_uid>', methods=['GET'])
+def get_one_vehicle(vehicle_uid):
+    people = Vehicle.query.get(vehicle_uid)
+    if vehicle is None :
+        return jsonify({"msg": f'vehicle with uid {vehicle_uid} not found'}), 404
+    result = vehicle.serialize()
+
+    return jsonify(result), 200
+
+
+@app.route('/vehicle', methods=['POST'])
+def create_one_vehicle():
+    body = json.loads(request.data)
+    new_vehicle = Vehicle(
+        name = body["name"],
+        image = body["image"],
+        model = body["model"],
+        vehicle_class = body["vehicle_class"],
+        manufacturer = body["manufacturer"],
+        cost_in_credits = body["cost_in_credits"],
+        length = body["length"],
+        passengers = body["passengers"],
+        cargo_capacity = body["cargo_capacity"]
+    )
+    db.session.add(new_vehicle)
+    db.session.commit()
+    result = {"msg": "vehicle created succesfully"}
+    return jsonify(result), 200
+
+@app.route('/vehicle/<int:vehicle_uid>', methods=['PUT'])
+def modify_one_vehicle(vehicle_uid):
+    vehicle = Vehicle.query.get(vehicle_uid)
+    if vehicle is None :
+        return jsonify({"msg": f'vehicle with uid {vehicle_uid} not found'}), 404
+    body = json.loads(request.data)
+    vehicle = Vehicle(
+        name = body["name"],
+        image = body["image"],
+        model = body["model"],
+        vehicle_class = body["vehicle_class"],
+        manufacturer = body["manufacturer"],
+        cost_in_credits = body["cost_in_credits"],
+        length = body["length"],
+        passengers = body["passengers"],
+        cargo_capacity = body["cargo_capacity"]
+    )
+    db.session.commit()
+    result = {"msg": "vehicle modify succesfully"}
     return jsonify(result), 200
 
 # this only runs if `$ python src/app.py` is executed
