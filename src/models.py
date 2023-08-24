@@ -2,7 +2,28 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-#estas son las tablas 
+#INFORMACION DE LAS TABLAS
+
+#FAVORITES
+class Favorites(db.Model):
+    uid = db.Column(db.Integer, primary_key=True)
+    people_uid = db.Column(db.Integer,db.ForeignKey("people.uid"), nullable=False)
+    planet_uid = db.Column(db.Integer,db.ForeignKey("planet.uid"), nullable=False)
+    vehicle_uid = db.Column(db.Integer,db.ForeignKey("vehicle.uid"), nullable=False)
+
+def __repr__(self):
+        return '<Favorites %r>' % self.uid
+
+def serialize(self):
+        return { 
+            "uid": self.uid,
+            "people_uid": db.query.get(self.people_uid)["name"],
+            "planet_uid": db.query.get(self.planet_uid)["name"],
+            "vehicle_uid": db.query.get(self.vehicle_uid)["name"],
+         
+        }
+
+
 #PEOPLE
 class People(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
@@ -15,6 +36,7 @@ class People(db.Model):
     hair_color = db.Column(db.String(80), unique=False, nullable=False)
     skin_color = db.Column(db.String(80), unique=False, nullable=False)
     eye_color = db.Column(db.String(80), unique=False, nullable=False)
+    favorites = db.relationship('Favorites', backref='people', lazy=True)
     
     def __repr__(self):
         return '<People %r>' % self.name
@@ -46,6 +68,7 @@ class Planet(db.Model):
     rotation_period = db.Column(db.String(80), unique=False, nullable=False)
     orbital_period = db.Column(db.String(80), unique=False, nullable=False)
     diameter = db.Column(db.String(80), unique=False, nullable=False)
+    favorites = db.relationship('Favorites', backref='planet', lazy=True)
     
     def __repr__(self):
         return '<Planet %r>' % self.name
@@ -77,6 +100,7 @@ class Vehicle(db.Model):
     length = db.Column(db.String(80), unique=False, nullable=False)
     passengers = db.Column(db.String(80), unique=False, nullable=False)
     cargo_capacity = db.Column(db.String(80), unique=False, nullable=False)
+    favorites = db.relationship('Favorites', backref='vehicle', lazy=True)
     
     def __repr__(self):
         return '<Vehicle %r>' % self.name

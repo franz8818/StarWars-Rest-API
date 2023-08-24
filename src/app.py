@@ -101,7 +101,7 @@ def modify_one_people(people_uid):
 
 #-------------------------------PLANETS----------------------------------------
 @app.route('/planet', methods=['GET'])
-def get_all_people():
+def get_all_planet():
     all_planet = Planet.query.all()
     if len(all_planet) < 1 :  
         return jsonify({"msg": "Not found"}), 404
@@ -144,17 +144,10 @@ def modify_one_planet(planet_uid):
     if planet is None :
         return jsonify({"msg": f'planet with uid {planet_uid} not found'}), 404
     body = json.loads(request.data)
-    planet = Planet(
-        name = body["name"],
-        image = body["image"],
-        gender = body["gender"],
-        birth_year = body["birth_year"],
-        height = body["height"],
-        mass = body["mass"],
-        hair_color = body["hair_color"],
-        skin_color = body["skin_color"],
-        eye_color = body["eye_color"]
-    )
+    for key in body:
+        for col in planet.serialize():
+            if key == col and key != "uid":
+                setattr(planet, col, body[key])
     db.session.commit()
     result = {"msg": "planet modify succesfully"}
     return jsonify(result), 200
