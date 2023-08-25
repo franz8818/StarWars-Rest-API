@@ -8,9 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, People
-from models import db, Planet
-from models import db, Vehicle
+from models import db, User, Favorite, People, Planet, Vehicle
 
 #from models import Person
 
@@ -38,6 +36,18 @@ def handle_invalid_usage(error):
 @app.route('/')
 def sitemap():
     return generate_sitemap(app)
+
+#-------------------------------USERS----------------------------------------
+
+@app.route('/user/<int:user_id>/favorites', methods=['GET'])
+def get_user_favorites(user_id):
+    favorites = Favorite.query.filter_by(user_id = user_id).all()
+    if len(favorites) < 1 :  
+        return jsonify({"msg": "Not found"}), 404
+    results = list(map(lambda item: item.serialize(), favorites))
+
+    return jsonify(results), 200
+
 
 #-------------------------------PEOPLE----------------------------------------
 @app.route('/people', methods=['GET'])
@@ -80,21 +90,14 @@ def create_one_people():
 
 @app.route('/people/<int:people_uid>', methods=['PUT'])
 def modify_one_people(people_uid):
-    people = People.query.get(people_uid)
+    people = people.query.get(people_uid)
     if people is None :
         return jsonify({"msg": f'people with uid {people_uid} not found'}), 404
     body = json.loads(request.data)
-    people = People(
-        name = body["name"],
-        image = body["image"],
-        gender = body["gender"],
-        birth_year = body["birth_year"],
-        height = body["height"],
-        mass = body["mass"],
-        hair_color = body["hair_color"],
-        skin_color = body["skin_color"],
-        eye_color = body["eye_color"]
-    )
+    for key in body:
+        for col in people.serialize():
+            if key == col and key != "uid":
+                setattr(people, col, body[key])
     db.session.commit()
     result = {"msg": "people modify succesfully"}
     return jsonify(result), 200
@@ -164,7 +167,7 @@ def get_all_vehicle():
 
 @app.route('/vehicle/<int:vehicle_uid>', methods=['GET'])
 def get_one_vehicle(vehicle_uid):
-    people = Vehicle.query.get(vehicle_uid)
+    vehicle = Vehicle.query.get(vehicle_uid)
     if vehicle is None :
         return jsonify({"msg": f'vehicle with uid {vehicle_uid} not found'}), 404
     result = vehicle.serialize()
@@ -197,17 +200,10 @@ def modify_one_vehicle(vehicle_uid):
     if vehicle is None :
         return jsonify({"msg": f'vehicle with uid {vehicle_uid} not found'}), 404
     body = json.loads(request.data)
-    vehicle = Vehicle(
-        name = body["name"],
-        image = body["image"],
-        model = body["model"],
-        vehicle_class = body["vehicle_class"],
-        manufacturer = body["manufacturer"],
-        cost_in_credits = body["cost_in_credits"],
-        length = body["length"],
-        passengers = body["passengers"],
-        cargo_capacity = body["cargo_capacity"]
-    )
+    for key in body:
+        for col in vehicle.serialize():
+            if key == col and key != "uid":
+                setattr(vehicle, col, body[key])
     db.session.commit()
     result = {"msg": "vehicle modify succesfully"}
     return jsonify(result), 200

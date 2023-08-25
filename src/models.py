@@ -5,29 +5,53 @@ db = SQLAlchemy()
 #INFORMACION DE LAS TABLAS
 
 #FAVORITES
-class Favorites(db.Model):
-    uid = db.Column(db.Integer, primary_key=True)
-    people_uid = db.Column(db.Integer,db.ForeignKey("people.uid"), nullable=False)
-    planet_uid = db.Column(db.Integer,db.ForeignKey("planet.uid"), nullable=False)
-    vehicle_uid = db.Column(db.Integer,db.ForeignKey("vehicle.uid"), nullable=False)
+class Favorite(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer,db.ForeignKey("user.id"), nullable=False)
+    people_uid = db.Column(db.Integer,db.ForeignKey("people.uid"), nullable=True)
+    planet_uid = db.Column(db.Integer,db.ForeignKey("planet.uid"), nullable=True)
+    vehicle_uid = db.Column(db.Integer,db.ForeignKey("vehicle.uid"), nullable=True)
 
 def __repr__(self):
-        return '<Favorites %r>' % self.uid
+        return '<Favorite %r>' % self.uid
 
 def serialize(self):
         return { 
             "uid": self.uid,
-            "people_uid": db.query.get(self.people_uid)["name"],
-            "planet_uid": db.query.get(self.planet_uid)["name"],
-            "vehicle_uid": db.query.get(self.vehicle_uid)["name"],
+            "user": self.user_id,
+            "people": db.query.get(self.people_uid)["name"],
+            "planet": db.query.get(self.planet_uid)["name"],
+            "vehicle": db.query.get(self.vehicle_uid)["name"],
          
+        }
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    first_name = db.Column(db.String(80), unique=False, nullable=False)
+    last_name = db.Column(db.String(80), unique=False, nullable=False)
+    email = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=False)
+    favorite = db.relationship('Favorite', backref='user', lazy=True)
+    
+    def __repr__(self):
+        return '<User %r>' % self.email
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+            # do not serialize the password, its a security breach
         }
 
 
 #PEOPLE
 class People(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=False, nullable=False)
+    name = db.Column(db.String(80), unique=True, nullable=False)
     image = db.Column(db.String(250), unique=True, nullable=False)
     gender = db.Column(db.String(6), unique=False, nullable=False)
     birth_year = db.Column(db.String(80), unique=False, nullable=False)
@@ -36,7 +60,7 @@ class People(db.Model):
     hair_color = db.Column(db.String(80), unique=False, nullable=False)
     skin_color = db.Column(db.String(80), unique=False, nullable=False)
     eye_color = db.Column(db.String(80), unique=False, nullable=False)
-    favorites = db.relationship('Favorites', backref='people', lazy=True)
+    favorite = db.relationship('Favorite', backref='people', lazy=True)
     
     def __repr__(self):
         return '<People %r>' % self.name
@@ -59,7 +83,7 @@ class People(db.Model):
 #PLANETS
 class Planet(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=False, nullable=False)
+    name = db.Column(db.String(80), unique=True, nullable=False)
     image = db.Column(db.String(250), unique=True, nullable=False)
     population = db.Column(db.String(15), unique=True, nullable=False)
     terrain = db.Column(db.String(80), unique=False, nullable=False)
@@ -68,7 +92,7 @@ class Planet(db.Model):
     rotation_period = db.Column(db.String(80), unique=False, nullable=False)
     orbital_period = db.Column(db.String(80), unique=False, nullable=False)
     diameter = db.Column(db.String(80), unique=False, nullable=False)
-    favorites = db.relationship('Favorites', backref='planet', lazy=True)
+    favorite = db.relationship('Favorite', backref='planet', lazy=True)
     
     def __repr__(self):
         return '<Planet %r>' % self.name
@@ -91,7 +115,7 @@ class Planet(db.Model):
  #VEHICLES
 class Vehicle(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=False, nullable=False)
+    name = db.Column(db.String(80), unique=True, nullable=False)
     image = db.Column(db.String(250), unique=True, nullable=False)
     model = db.Column(db.String(15), unique=True, nullable=False)
     vehicle_class = db.Column(db.String(80), unique=False, nullable=False)
@@ -100,7 +124,7 @@ class Vehicle(db.Model):
     length = db.Column(db.String(80), unique=False, nullable=False)
     passengers = db.Column(db.String(80), unique=False, nullable=False)
     cargo_capacity = db.Column(db.String(80), unique=False, nullable=False)
-    favorites = db.relationship('Favorites', backref='vehicle', lazy=True)
+    favorite = db.relationship('Favorite', backref='vehicle', lazy=True)
     
     def __repr__(self):
         return '<Vehicle %r>' % self.name
