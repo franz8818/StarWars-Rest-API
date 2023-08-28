@@ -12,18 +12,18 @@ class Favorite(db.Model):
     planet_uid = db.Column(db.Integer,db.ForeignKey("planet.uid"), nullable=True)
     vehicle_uid = db.Column(db.Integer,db.ForeignKey("vehicle.uid"), nullable=True)
 
-def __repr__(self):
-        return '<Favorite %r>' % self.uid
+    def __repr__(self):
+            return '<Favorite %r>' % self.id
 
-def serialize(self):
-        return { 
-            "uid": self.uid,
-            "user": self.user_id,
-            "people": db.query.get(self.people_uid)["name"],
-            "planet": db.query.get(self.planet_uid)["name"],
-            "vehicle": db.query.get(self.vehicle_uid)["name"],
-         
-        }
+    def serialize(self):
+            return { 
+                "id": self.id,
+                "user": self.user_id,
+                "people": db.query.get(self.people_uid)["name"],
+                "planet": db.query.get(self.planet_uid)["name"],
+                "vehicle": db.query.get(self.vehicle_uid)["name"],
+            
+            }
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

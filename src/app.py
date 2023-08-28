@@ -90,7 +90,7 @@ def create_one_people():
 
 @app.route('/people/<int:people_uid>', methods=['PUT'])
 def modify_one_people(people_uid):
-    people = people.query.get(people_uid)
+    people = People.query.get(people_uid)
     if people is None :
         return jsonify({"msg": f'people with uid {people_uid} not found'}), 404
     body = json.loads(request.data)
@@ -101,6 +101,11 @@ def modify_one_people(people_uid):
     db.session.commit()
     result = {"msg": "people modify succesfully"}
     return jsonify(result), 200
+
+@app.route('/people/<int:people_uid>', methods=['DELETE'])
+def delete_one_people(people_uid):
+    people_uid.pop(people_uid)
+    return jsonify(people_uid)
 
 #-------------------------------PLANETS----------------------------------------
 @app.route('/planet', methods=['GET'])
