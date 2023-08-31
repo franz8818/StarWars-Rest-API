@@ -48,6 +48,20 @@ def get_user_favorites(user_id):
 
     return jsonify(results), 200
 
+@app.route('/user/<int:user_id>/favorites', methods=['POST'])
+def create_one_favorite(user_id):
+    body = json.loads(request.data)
+    new_favorite = Favorite(
+        user_id = user_id,
+        people_uid = body["people_uid"] if "people_uid" in body else None,
+        planet_uid = body["planet_uid"] if "planet_uid" in body else None,
+        vehicle_uid = body["vehicle_uid"] if "vehicle_uid" in body else None
+    )
+    db.session.add(new_favorite)
+    db.session.commit()
+    result = {"msg": "favorite created succesfully"}
+    return jsonify(result), 200
+
 
 #-------------------------------PEOPLE----------------------------------------
 @app.route('/people', methods=['GET'])

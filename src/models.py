@@ -19,10 +19,9 @@ class Favorite(db.Model):
             return { 
                 "id": self.id,
                 "user": self.user_id,
-                "people": db.query.get(self.people_uid)["name"],
-                "planet": db.query.get(self.planet_uid)["name"],
-                "vehicle": db.query.get(self.vehicle_uid)["name"],
-            
+                "people_uid": self.people_uid,
+                "planet_uid": self.planet_uid,
+                "vehicle_uid": self.vehicle_uid,
             }
 
 class User(db.Model):
