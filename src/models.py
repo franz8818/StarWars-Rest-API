@@ -5,6 +5,7 @@ db = SQLAlchemy()
 #INFORMACION DE LAS TABLAS
 
 #FAVORITES
+#Este objeto es el formato de la base de datos
 class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer,db.ForeignKey("user.id"), nullable=False)
@@ -15,6 +16,8 @@ class Favorite(db.Model):
     def __repr__(self):
             return '<Favorite %r>' % self.id
 
+#Retorna en formato de "diccionario"
+#self -> clase que retorna dentro -> Hace referencia a la variable(columna)
     def serialize(self):
             return { 
                 "id": self.id,
