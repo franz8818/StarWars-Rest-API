@@ -87,7 +87,7 @@ class Planet(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     image = db.Column(db.String(250), unique=True, nullable=False)
-    population = db.Column(db.String(15), unique=True, nullable=False)
+    population = db.Column(db.String(15), unique=False, nullable=False)
     terrain = db.Column(db.String(80), unique=False, nullable=False)
     climate = db.Column(db.String(80), unique=False, nullable=False)
     surface_water = db.Column(db.String(80), unique=False, nullable=False)
