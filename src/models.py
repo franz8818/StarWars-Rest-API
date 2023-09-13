@@ -119,7 +119,7 @@ class Vehicle(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     image = db.Column(db.String(250), unique=True, nullable=False)
-    model = db.Column(db.String(15), unique=True, nullable=False)
+    model = db.Column(db.String(80), unique=True, nullable=False)
     vehicle_class = db.Column(db.String(80), unique=False, nullable=False)
     manufacturer = db.Column(db.String(80), unique=False, nullable=False)
     cost_in_credits = db.Column(db.String(80), unique=False, nullable=False)
