@@ -1,0 +1,547 @@
+{
+	"info": {
+		"_postman_id": "0dbb4c0f-6ea2-4d78-b22a-28cea51bfcc8",
+		"name": "StarWars API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23074645"
+	},
+	"item": [
+		{
+			"name": "People",
+			"item": [
+				{
+					"name": "Get All People",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/people/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"people",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One People",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/people/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"people",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create One People",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n    \"name\": \"Poly\",\n    \"image\": \"800000\",\n    \"gender\": \"men\",\n    \"birth_year\": \"2000\",\n    \"height\": \"2.00\",\n    \"mass\": \"89\",\n    \"hair_color\": \"none\",\n    \"skin_color\": \"White\",\n    \"eye_color\": \"Brown\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/people/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"people",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify One People",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"birth_year\": \"19BBY\",\n        \"eye_color\": \"blue\",\n        \"gender\": \"male\",\n        \"hair_color\": \"blond\",\n        \"height\": \"1.72\",\n        \"image\": \"12345\",\n        \"mass\": \"77\",\n        \"name\": \"Luke Skywalker\",\n        \"skin_color\": \"fair\",\n        \"uid\": 2\n    },\n    {\n        \"birth_year\": \"2000\",\n        \"eye_color\": \"Brown\",\n        \"gender\": \"men\",\n        \"hair_color\": \"none\",\n        \"height\": \"2.00\",\n        \"image\": \"934\",\n        \"mass\": \"89\",\n        \"name\": \"Mercy\",\n        \"skin_color\": \"White\",\n        \"uid\": 3\n    },\n    {\n        \"birth_year\": \"2000\",\n        \"eye_color\": \"Brown\",\n        \"gender\": \"men\",\n        \"hair_color\": \"none\",\n        \"height\": \"2.00\",\n        \"image\": \"800000\",\n        \"mass\": \"89\",\n        \"name\": \"Poly\",\n        \"skin_color\": \"White\",\n        \"uid\": 5\n    },\n    {\n        \"birth_year\": \"2000\",\n        \"eye_color\": \"Black\",\n        \"gender\": \"men\",\n        \"hair_color\": \"none\",\n        \"height\": \"2.00\",\n        \"image\": \"123\",\n        \"mass\": \"89\",\n        \"name\": \"Darth Vader\",\n        \"skin_color\": \"White\",\n        \"uid\": 1\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/people/3",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"people",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete One People",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"birth_year\": \"19BBY\",\n        \"eye_color\": \"blue\",\n        \"gender\": \"male\",\n        \"hair_color\": \"blond\",\n        \"height\": \"1.72\",\n        \"image\": \"12345\",\n        \"mass\": \"77\",\n        \"name\": \"Luke Skywalker\",\n        \"skin_color\": \"fair\",\n        \"uid\": 2\n    },\n    {\n        \"birth_year\": \"2000\",\n        \"eye_color\": \"Brown\",\n        \"gender\": \"men\",\n        \"hair_color\": \"none\",\n        \"height\": \"2.00\",\n        \"image\": \"934\",\n        \"mass\": \"89\",\n        \"name\": \"Mercy\",\n        \"skin_color\": \"White\",\n        \"uid\": 3\n    },\n    {\n        \"birth_year\": \"2000\",\n        \"eye_color\": \"Brown\",\n        \"gender\": \"men\",\n        \"hair_color\": \"none\",\n        \"height\": \"2.00\",\n        \"image\": \"800000\",\n        \"mass\": \"89\",\n        \"name\": \"Poly\",\n        \"skin_color\": \"White\",\n        \"uid\": 5\n    },\n    {\n        \"birth_year\": \"2000\",\n        \"eye_color\": \"Black\",\n        \"gender\": \"men\",\n        \"hair_color\": \"none\",\n        \"height\": \"2.00\",\n        \"image\": \"123\",\n        \"mass\": \"89\",\n        \"name\": \"Darth Vader\",\n        \"skin_color\": \"White\",\n        \"uid\": 1\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/people/8",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"people",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/user",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/user/3",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"user",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create One User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"poly8847@yahoo.com\",\n    \"first_name\": \"Paulina\",\n    \"last_name\": \"Sánchez\",\n    \"username\": \"poly88\",\n    \"password\": \"666666\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/user",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify One User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"last_name\": \"Castillo\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/user/6",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"user",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Favorite",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/user",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Favorites",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"poly47@yahoo.com\",\n    \"first_name\": \"Paulina\",\n    \"id\": 3,\n    \"last_name\": \"Sánchez\",\n    \"username\": \"poly4788\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/user/3",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"user",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"poly47@yahoo.com\",\n    \"first_name\": \"Paulina\",\n    \"id\": 3,\n    \"last_name\": \"Sánchez\",\n    \"username\": \"poly4788\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/user/3",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"user",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Planet",
+			"item": [
+				{
+					"name": "Get All Planet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/planet/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"planet",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Planet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/planet/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"planet",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create One Planet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"climate\": \"murky\",\n        \"diameter\": \"8900\",\n        \"image\": \"567844449\",\n        \"name\": \"Jupiter\",\n        \"orbital_period\": \"341\",\n        \"population\": \"unknown\",\n        \"rotation_period\": \"23\",\n        \"surface_water\": \"8\",\n        \"terrain\": \"swam, jungles\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/planet/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"planet",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify One Planet",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n        \"climate\": \"murky\",\n        \"diameter\": \"8900\",\n        \"image\": \"56789\",\n        \"name\": \"Dagobah\",\n        \"orbital_period\": \"341\",\n        \"population\": \"unknown\",\n        \"rotation_period\": \"23\",\n        \"surface_water\": \"10008\",\n        \"terrain\": \"swam, jungles\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/planet/4",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"planet",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete One Planet",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"climate\": \"hty\",\n    \"diameter\": \"lmvslv\",\n    \"image\": \"6000\",\n    \"name\": \"Marte\",\n    \"orbital_period\": \"kvkv\",\n    \"population\": \"5000\",\n    \"rotation_period\": \"ksvvs\",\n    \"surface_water\": \"owmf\",\n    \"terrain\": \"8000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/planet/6",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"planet",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vehicle",
+			"item": [
+				{
+					"name": "Get All Vehicle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/vehicle/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"vehicle",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Vehicle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/vehicle/2",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"vehicle",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create One Vehicle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"cargo_capacity\": \"1,000kg\",\n        \"cost_in_credits\": \"Unknown\",\n        \"image\": \"1123456\",\n        \"length\": \"20m\",\n        \"manufacturer\": \"Kuat Drive Yards, Imperial Department of Military\",\n        \"model\": \"All Terrain Armored Transport-2\",\n        \"name\": \"AT-AT-2\",\n        \"passengers\": \"40\",\n        \"vehicle_class\": \"Assault Walker\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/vehicle/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"vehicle",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify One Vehicle",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cargo_capacity\": \"sbbsbs\",\n    \"cost_in_credits\": \"qefffff\",\n    \"image\": \"frf\",\n    \"length\": \"fvvdsb\",\n    \"manufacturer\": \"fqfqfee\",\n    \"model\": \"qqfeq\",\n    \"name\": \"Ferrari\",\n    \"passengers\": \"bsdb\",\n    \"vehicle_class\": \"fqefqf\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/vehicle/5",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"vehicle",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete One Vehicle",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"cargo_capacity\": \"5kg\",\n        \"cost_in_credits\": \"10,550\",\n        \"image\": \"78910\",\n        \"length\": \"3.4m\",\n        \"manufacturer\": \"SoroSuub Corporation\",\n        \"model\": \" X-34\",\n        \"name\": \"X-34 landspeeder\",\n        \"passengers\": \"1\",\n        \"uid\": 1,\n        \"vehicle_class\": \"Repulsorcraft\"\n    },\n    {\n        \"cargo_capacity\": \"1,000kg\",\n        \"cost_in_credits\": \"Unknown\",\n        \"image\": \"123456\",\n        \"length\": \"20m\",\n        \"manufacturer\": \"Kuat Drive Yards, Imperial Department of Military\",\n        \"model\": \"All Terrain Armored Transport\",\n        \"name\": \"AT-AT\",\n        \"passengers\": \"40\",\n        \"uid\": 2,\n        \"vehicle_class\": \"Assault Walker\"\n    },\n    {\n        \"cargo_capacity\": \"1,000kg\",\n        \"cost_in_credits\": \"Unknown\",\n        \"image\": \"1123456\",\n        \"length\": \"20m\",\n        \"manufacturer\": \"Kuat Drive Yards, Imperial Department of Military\",\n        \"model\": \"All Terrain Armored Transport-2\",\n        \"name\": \"AT-AT-2\",\n        \"passengers\": \"40\",\n        \"uid\": 3,\n        \"vehicle_class\": \"Assault Walker\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/vehicle/4",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"vehicle",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

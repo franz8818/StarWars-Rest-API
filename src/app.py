@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os, json
-from flask import Flask, request, jsonify, url_for
+from flask import Flask, request, jsonify, url_for, request
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
@@ -38,6 +38,65 @@ def sitemap():
     return generate_sitemap(app)
 
 #-------------------------------USERS----------------------------------------
+@app.route('/user', methods=['GET'])
+def get_all_users():
+    all_users = User.query.all()
+    if len(all_users) < 1 :  
+        return jsonify({"msg": "Not found"}), 404
+    results = list(map(lambda item: item.serialize(), all_users))
+
+    return jsonify(results), 200
+
+@app.route('/user/<int:user_id>', methods=['GET'])
+def get_one_user(user_id):
+    user = User.query.get(user_id)
+    if user is None :
+        return jsonify({"msg": f'people with uid {user_id} not found'}), 404
+    result = user.serialize()
+
+    return jsonify(result), 200
+
+
+@app.route('/user', methods=['POST'])
+def create_one_user():
+    body = json.loads(request.data)
+    new_user = User(
+        username = body["username"],
+        first_name = body["first_name"],
+        last_name = body["last_name"],
+        email = body["email"],
+        password = body["password"],
+    )
+    
+    db.session.add(new_user)
+    db.session.commit()
+    result = {"msg": "user created succesfully"}
+    return jsonify(result), 200
+
+@app.route('/user/<int:user_id>', methods=['PUT'])
+def modify_one_user(user_id):
+    user = User.query.get(user_id)
+    if user is None :
+        return jsonify({"msg": f'people with uid {user_id} not found'}), 404
+    body = json.loads(request.data)
+    for key in body:
+        for col in user.serialize():
+            if key == col and key != "uid":
+                setattr(user, col, body[key])
+    db.session.commit()
+    result = {"msg": "user modify succesfully"}
+    return jsonify(result), 200
+
+@app.route('/user/<int:user_id>', methods=['DELETE'])
+def delete_one_user(user_id):
+    user = User.query.get(user_id)
+    if user is None :
+        return jsonify({"msg": f'vehicle with id {user_id} not found'}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+    result = {"msg": f'User with username {user.username} deleted successfully'}
+    return jsonify(result), 200 
 
 @app.route('/user/<int:user_id>/favorites', methods=['GET'])
 def get_user_favorites(user_id):
@@ -61,7 +120,6 @@ def create_one_favorite(user_id):
     db.session.commit()
     result = {"msg": "favorite created succesfully"}
     return jsonify(result), 200
-
 
 #-------------------------------PEOPLE----------------------------------------
 @app.route('/people', methods=['GET'])
@@ -118,8 +176,15 @@ def modify_one_people(people_uid):
 
 @app.route('/people/<int:people_uid>', methods=['DELETE'])
 def delete_one_people(people_uid):
-    people_uid.pop(people_uid)
-    return jsonify(people_uid)
+    # people_uid.pop(people_uid)
+    people = People.query.get(people_uid)
+    if people is None :
+        return jsonify({"msg": f'people with uid {people_uid} not found'}), 404
+
+    db.session.delete(people)
+    db.session.commit()
+    result = {"msg": f'People with name {people.name} deleted successfully'}
+    return jsonify(result), 200    
 
 #-------------------------------PLANETS----------------------------------------
 @app.route('/planet', methods=['GET'])
@@ -174,6 +239,17 @@ def modify_one_planet(planet_uid):
     result = {"msg": "planet modify succesfully"}
     return jsonify(result), 200
 
+@app.route('/planet/<int:planet_uid>', methods=['DELETE'])
+def delete_one_planet(planet_uid):
+    planet = Planet.query.get(planet_uid)
+    if planet is None :
+        return jsonify({"msg": f'planet with uid {planet_uid["name"]} not found'}), 404
+
+    db.session.delete(planet)
+    db.session.commit()
+    result = {"msg": f'Planet with uid {planet.name} deleted successfully'}
+    return jsonify(result), 200  
+
 #-------------------------------VEHICLES----------------------------------------
 @app.route('/vehicle', methods=['GET'])
 def get_all_vehicle():
@@ -219,13 +295,24 @@ def modify_one_vehicle(vehicle_uid):
     if vehicle is None :
         return jsonify({"msg": f'vehicle with uid {vehicle_uid} not found'}), 404
     body = json.loads(request.data)
-    for key in body:
+    for key in body: 
         for col in vehicle.serialize():
             if key == col and key != "uid":
                 setattr(vehicle, col, body[key])
     db.session.commit()
     result = {"msg": "vehicle modify succesfully"}
     return jsonify(result), 200
+
+@app.route('/vehicle/<int:vehicle_uid>', methods=['DELETE'])
+def delete_one_vehicle(vehicle_uid):
+    vehicle = Vehicle.query.get(vehicle_uid)
+    if vehicle is None :
+        return jsonify({"msg": f'vehicle with uid {vehicle_uid} not found'}), 404
+
+    db.session.delete(vehicle)
+    db.session.commit()
+    result = {"msg": f'Vehicle with uid {vehicle.name} deleted successfully'}
+    return jsonify(result), 200   
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
